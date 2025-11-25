@@ -1,0 +1,108 @@
+// Original file: src/proto/grounds.proto
+
+import type * as grpc from '@grpc/grpc-js'
+import type { MethodDefinition } from '@grpc/proto-loader'
+import type { CreateGroundRequest as _grounds_CreateGroundRequest, CreateGroundRequest__Output as _grounds_CreateGroundRequest__Output } from '../grounds/CreateGroundRequest';
+import type { DeactivateGroundRequest as _grounds_DeactivateGroundRequest, DeactivateGroundRequest__Output as _grounds_DeactivateGroundRequest__Output } from '../grounds/DeactivateGroundRequest';
+import type { GetGroundRequest as _grounds_GetGroundRequest, GetGroundRequest__Output as _grounds_GetGroundRequest__Output } from '../grounds/GetGroundRequest';
+import type { GetGroundsByCollegeRequest as _grounds_GetGroundsByCollegeRequest, GetGroundsByCollegeRequest__Output as _grounds_GetGroundsByCollegeRequest__Output } from '../grounds/GetGroundsByCollegeRequest';
+import type { GetGroundsByCollegeResponse as _grounds_GetGroundsByCollegeResponse, GetGroundsByCollegeResponse__Output as _grounds_GetGroundsByCollegeResponse__Output } from '../grounds/GetGroundsByCollegeResponse';
+import type { Ground as _grounds_Ground, Ground__Output as _grounds_Ground__Output } from '../grounds/Ground';
+import type { IsPeakTimeRequest as _grounds_IsPeakTimeRequest, IsPeakTimeRequest__Output as _grounds_IsPeakTimeRequest__Output } from '../grounds/IsPeakTimeRequest';
+import type { IsPeakTimeResponse as _grounds_IsPeakTimeResponse, IsPeakTimeResponse__Output as _grounds_IsPeakTimeResponse__Output } from '../grounds/IsPeakTimeResponse';
+import type { SearchGroundsRequest as _grounds_SearchGroundsRequest, SearchGroundsRequest__Output as _grounds_SearchGroundsRequest__Output } from '../grounds/SearchGroundsRequest';
+import type { SearchGroundsResponse as _grounds_SearchGroundsResponse, SearchGroundsResponse__Output as _grounds_SearchGroundsResponse__Output } from '../grounds/SearchGroundsResponse';
+import type { UpdateGroundRequest as _grounds_UpdateGroundRequest, UpdateGroundRequest__Output as _grounds_UpdateGroundRequest__Output } from '../grounds/UpdateGroundRequest';
+
+export interface GroundsServiceClient extends grpc.Client {
+  CreateGround(argument: _grounds_CreateGroundRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  CreateGround(argument: _grounds_CreateGroundRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  CreateGround(argument: _grounds_CreateGroundRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  CreateGround(argument: _grounds_CreateGroundRequest, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  createGround(argument: _grounds_CreateGroundRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  createGround(argument: _grounds_CreateGroundRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  createGround(argument: _grounds_CreateGroundRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  createGround(argument: _grounds_CreateGroundRequest, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  
+  DeactivateGround(argument: _grounds_DeactivateGroundRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  DeactivateGround(argument: _grounds_DeactivateGroundRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  DeactivateGround(argument: _grounds_DeactivateGroundRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  DeactivateGround(argument: _grounds_DeactivateGroundRequest, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  deactivateGround(argument: _grounds_DeactivateGroundRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  deactivateGround(argument: _grounds_DeactivateGroundRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  deactivateGround(argument: _grounds_DeactivateGroundRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  deactivateGround(argument: _grounds_DeactivateGroundRequest, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  
+  GetGround(argument: _grounds_GetGroundRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  GetGround(argument: _grounds_GetGroundRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  GetGround(argument: _grounds_GetGroundRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  GetGround(argument: _grounds_GetGroundRequest, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  getGround(argument: _grounds_GetGroundRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  getGround(argument: _grounds_GetGroundRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  getGround(argument: _grounds_GetGroundRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  getGround(argument: _grounds_GetGroundRequest, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  
+  GetGroundsByCollege(argument: _grounds_GetGroundsByCollegeRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_GetGroundsByCollegeResponse__Output>): grpc.ClientUnaryCall;
+  GetGroundsByCollege(argument: _grounds_GetGroundsByCollegeRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_grounds_GetGroundsByCollegeResponse__Output>): grpc.ClientUnaryCall;
+  GetGroundsByCollege(argument: _grounds_GetGroundsByCollegeRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_GetGroundsByCollegeResponse__Output>): grpc.ClientUnaryCall;
+  GetGroundsByCollege(argument: _grounds_GetGroundsByCollegeRequest, callback: grpc.requestCallback<_grounds_GetGroundsByCollegeResponse__Output>): grpc.ClientUnaryCall;
+  getGroundsByCollege(argument: _grounds_GetGroundsByCollegeRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_GetGroundsByCollegeResponse__Output>): grpc.ClientUnaryCall;
+  getGroundsByCollege(argument: _grounds_GetGroundsByCollegeRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_grounds_GetGroundsByCollegeResponse__Output>): grpc.ClientUnaryCall;
+  getGroundsByCollege(argument: _grounds_GetGroundsByCollegeRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_GetGroundsByCollegeResponse__Output>): grpc.ClientUnaryCall;
+  getGroundsByCollege(argument: _grounds_GetGroundsByCollegeRequest, callback: grpc.requestCallback<_grounds_GetGroundsByCollegeResponse__Output>): grpc.ClientUnaryCall;
+  
+  IsPeakTime(argument: _grounds_IsPeakTimeRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_IsPeakTimeResponse__Output>): grpc.ClientUnaryCall;
+  IsPeakTime(argument: _grounds_IsPeakTimeRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_grounds_IsPeakTimeResponse__Output>): grpc.ClientUnaryCall;
+  IsPeakTime(argument: _grounds_IsPeakTimeRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_IsPeakTimeResponse__Output>): grpc.ClientUnaryCall;
+  IsPeakTime(argument: _grounds_IsPeakTimeRequest, callback: grpc.requestCallback<_grounds_IsPeakTimeResponse__Output>): grpc.ClientUnaryCall;
+  isPeakTime(argument: _grounds_IsPeakTimeRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_IsPeakTimeResponse__Output>): grpc.ClientUnaryCall;
+  isPeakTime(argument: _grounds_IsPeakTimeRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_grounds_IsPeakTimeResponse__Output>): grpc.ClientUnaryCall;
+  isPeakTime(argument: _grounds_IsPeakTimeRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_IsPeakTimeResponse__Output>): grpc.ClientUnaryCall;
+  isPeakTime(argument: _grounds_IsPeakTimeRequest, callback: grpc.requestCallback<_grounds_IsPeakTimeResponse__Output>): grpc.ClientUnaryCall;
+  
+  SearchGrounds(argument: _grounds_SearchGroundsRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_SearchGroundsResponse__Output>): grpc.ClientUnaryCall;
+  SearchGrounds(argument: _grounds_SearchGroundsRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_grounds_SearchGroundsResponse__Output>): grpc.ClientUnaryCall;
+  SearchGrounds(argument: _grounds_SearchGroundsRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_SearchGroundsResponse__Output>): grpc.ClientUnaryCall;
+  SearchGrounds(argument: _grounds_SearchGroundsRequest, callback: grpc.requestCallback<_grounds_SearchGroundsResponse__Output>): grpc.ClientUnaryCall;
+  searchGrounds(argument: _grounds_SearchGroundsRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_SearchGroundsResponse__Output>): grpc.ClientUnaryCall;
+  searchGrounds(argument: _grounds_SearchGroundsRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_grounds_SearchGroundsResponse__Output>): grpc.ClientUnaryCall;
+  searchGrounds(argument: _grounds_SearchGroundsRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_SearchGroundsResponse__Output>): grpc.ClientUnaryCall;
+  searchGrounds(argument: _grounds_SearchGroundsRequest, callback: grpc.requestCallback<_grounds_SearchGroundsResponse__Output>): grpc.ClientUnaryCall;
+  
+  UpdateGround(argument: _grounds_UpdateGroundRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  UpdateGround(argument: _grounds_UpdateGroundRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  UpdateGround(argument: _grounds_UpdateGroundRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  UpdateGround(argument: _grounds_UpdateGroundRequest, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  updateGround(argument: _grounds_UpdateGroundRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  updateGround(argument: _grounds_UpdateGroundRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  updateGround(argument: _grounds_UpdateGroundRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  updateGround(argument: _grounds_UpdateGroundRequest, callback: grpc.requestCallback<_grounds_Ground__Output>): grpc.ClientUnaryCall;
+  
+}
+
+export interface GroundsServiceHandlers extends grpc.UntypedServiceImplementation {
+  CreateGround: grpc.handleUnaryCall<_grounds_CreateGroundRequest__Output, _grounds_Ground>;
+  
+  DeactivateGround: grpc.handleUnaryCall<_grounds_DeactivateGroundRequest__Output, _grounds_Ground>;
+  
+  GetGround: grpc.handleUnaryCall<_grounds_GetGroundRequest__Output, _grounds_Ground>;
+  
+  GetGroundsByCollege: grpc.handleUnaryCall<_grounds_GetGroundsByCollegeRequest__Output, _grounds_GetGroundsByCollegeResponse>;
+  
+  IsPeakTime: grpc.handleUnaryCall<_grounds_IsPeakTimeRequest__Output, _grounds_IsPeakTimeResponse>;
+  
+  SearchGrounds: grpc.handleUnaryCall<_grounds_SearchGroundsRequest__Output, _grounds_SearchGroundsResponse>;
+  
+  UpdateGround: grpc.handleUnaryCall<_grounds_UpdateGroundRequest__Output, _grounds_Ground>;
+  
+}
+
+export interface GroundsServiceDefinition extends grpc.ServiceDefinition {
+  CreateGround: MethodDefinition<_grounds_CreateGroundRequest, _grounds_Ground, _grounds_CreateGroundRequest__Output, _grounds_Ground__Output>
+  DeactivateGround: MethodDefinition<_grounds_DeactivateGroundRequest, _grounds_Ground, _grounds_DeactivateGroundRequest__Output, _grounds_Ground__Output>
+  GetGround: MethodDefinition<_grounds_GetGroundRequest, _grounds_Ground, _grounds_GetGroundRequest__Output, _grounds_Ground__Output>
+  GetGroundsByCollege: MethodDefinition<_grounds_GetGroundsByCollegeRequest, _grounds_GetGroundsByCollegeResponse, _grounds_GetGroundsByCollegeRequest__Output, _grounds_GetGroundsByCollegeResponse__Output>
+  IsPeakTime: MethodDefinition<_grounds_IsPeakTimeRequest, _grounds_IsPeakTimeResponse, _grounds_IsPeakTimeRequest__Output, _grounds_IsPeakTimeResponse__Output>
+  SearchGrounds: MethodDefinition<_grounds_SearchGroundsRequest, _grounds_SearchGroundsResponse, _grounds_SearchGroundsRequest__Output, _grounds_SearchGroundsResponse__Output>
+  UpdateGround: MethodDefinition<_grounds_UpdateGroundRequest, _grounds_Ground, _grounds_UpdateGroundRequest__Output, _grounds_Ground__Output>
+}

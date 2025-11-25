@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///Users/yontenkinleytenzin/Desktop/final-3-year-sem1/one-stop-book/frontend/app/page.tsx"],"sourcesContent":["import { redirect } from 'next/navigation';\n\n/**\n * Root page - redirects to the public grounds listing page\n * This follows Next.js 13+ App Router best practices for route organization\n */\nexport default function RootPage() {\n  redirect('/grounds');\n}\n"],"names":[],"mappings":";;;;AAAA;AAAA;;AAMe,SAAS;IACtB,IAAA,iMAAQ,EAAC;AACX"}}]
+}

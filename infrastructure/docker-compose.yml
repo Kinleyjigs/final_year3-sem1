@@ -1,0 +1,230 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: osb-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: osb_user
+      POSTGRES_PASSWORD: osb_password
+      POSTGRES_DB: one_stop_book
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U osb_user -d one_stop_book"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for caching and rate limiting
+  redis:
+    image: redis:7-alpine
+    container_name: osb-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # Auth Service
+  auth-service:
+    build:
+      context: ..
+      dockerfile: services/auth-service/Dockerfile
+    container_name: osb-auth-service
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      PORT: 50051
+      DATABASE_URL: postgresql://osb_user:osb_password@postgres:5432/one_stop_book?schema=auth
+      JWT_SECRET: your-jwt-secret-change-in-production
+      JWT_EXPIRY: 24h
+    ports:
+      - "50051:50051"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ../services/auth-service:/app/services/auth-service
+      - ../packages:/app/packages
+      - /app/node_modules
+      - /app/services/auth-service/node_modules
+
+  # Grounds Service
+  grounds-service:
+    build:
+      context: ..
+      dockerfile: services/grounds-service/Dockerfile
+    container_name: osb-grounds-service
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      PORT: 50052
+      DATABASE_URL: postgresql://osb_user:osb_password@postgres:5432/one_stop_book?schema=grounds
+    ports:
+      - "50052:50052"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ../services/grounds-service:/app/services/grounds-service
+      - ../packages:/app/packages
+      - /app/node_modules
+      - /app/services/grounds-service/node_modules
+
+  # Booking Service
+  booking-service:
+    build:
+      context: ..
+      dockerfile: services/booking-service/Dockerfile
+    container_name: osb-booking-service
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      PORT: 50053
+      DATABASE_URL: postgresql://osb_user:osb_password@postgres:5432/one_stop_book?schema=bookings
+      AUTH_SERVICE_URL: auth-service:50051
+      GROUNDS_SERVICE_URL: grounds-service:50052
+      NOTIFICATION_SERVICE_URL: notification-service:50055
+    ports:
+      - "50053:50053"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
+      grounds-service:
+        condition: service_started
+    volumes:
+      - ../services/booking-service:/app/services/booking-service
+      - ../packages:/app/packages
+      - /app/node_modules
+      - /app/services/booking-service/node_modules
+
+  # Maintenance Service
+  maintenance-service:
+    build:
+      context: ..
+      dockerfile: services/maintenance-service/Dockerfile
+    container_name: osb-maintenance-service
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      PORT: 50054
+      DATABASE_URL: postgresql://osb_user:osb_password@postgres:5432/one_stop_book?schema=maintenance
+      BOOKING_SERVICE_URL: booking-service:50053
+      NOTIFICATION_SERVICE_URL: notification-service:50055
+    ports:
+      - "50054:50054"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ../services/maintenance-service:/app/services/maintenance-service
+      - ../packages:/app/packages
+      - /app/node_modules
+      - /app/services/maintenance-service/node_modules
+
+  # Notification Service
+  notification-service:
+    build:
+      context: ..
+      dockerfile: services/notification-service/Dockerfile
+    container_name: osb-notification-service
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      PORT: 50055
+      DATABASE_URL: postgresql://osb_user:osb_password@postgres:5432/one_stop_book?schema=notifications
+      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-your-email@gmail.com}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-your-app-password}
+      SMTP_FROM: ${SMTP_FROM:-One Stop Book <noreply@onestopbook.com>}
+    ports:
+      - "50055:50055"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ../services/notification-service:/app/services/notification-service
+      - ../packages:/app/packages
+      - /app/node_modules
+      - /app/services/notification-service/node_modules
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ..
+      dockerfile: services/api-gateway/Dockerfile
+    container_name: osb-api-gateway
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+      AUTH_SERVICE_URL: auth-service:50051
+      GROUNDS_SERVICE_URL: grounds-service:50052
+      BOOKING_SERVICE_URL: booking-service:50053
+      MAINTENANCE_SERVICE_URL: maintenance-service:50054
+      NOTIFICATION_SERVICE_URL: notification-service:50055
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: your-jwt-secret-change-in-production
+      RATE_LIMIT_PUBLIC: 100
+      RATE_LIMIT_AUTH: 20
+      RATE_LIMIT_ADMIN: 50
+    ports:
+      - "3001:3001"
+    depends_on:
+      redis:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
+      grounds-service:
+        condition: service_started
+      booking-service:
+        condition: service_started
+      maintenance-service:
+        condition: service_started
+      notification-service:
+        condition: service_started
+    volumes:
+      - ../services/api-gateway:/app/services/api-gateway
+      - ../packages:/app/packages
+      - /app/node_modules
+      - /app/services/api-gateway/node_modules
+
+  # Frontend (Next.js)
+  frontend:
+    build:
+      context: ..
+      dockerfile: frontend/Dockerfile
+    container_name: osb-frontend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      NEXT_PUBLIC_API_URL: http://localhost:3001
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api-gateway
+    volumes:
+      - ../frontend:/app/frontend
+      - ../packages:/app/packages
+      - /app/node_modules
+      - /app/frontend/node_modules
+      - /app/frontend/.next
+
+volumes:
+  postgres_data:
+  redis_data:

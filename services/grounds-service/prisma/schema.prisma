@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["auth", "grounds", "bookings", "maintenance", "notifications"]
+}
+
+model Ground {
+  id          String   @id @default(uuid())
+  name        String
+  college     String
+  location    String
+  description String?
+  capacity    Int
+  amenities   String[] @default([])
+  peakHours   Json?    @map("peak_hours")
+  photos      String[] @default([])
+  isActive    Boolean  @default(true) @map("is_active")
+  timezone    String   @default("UTC")
+  adminUserId String   @map("admin_user_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@unique([college, name])
+  @@index([college, isActive])
+  @@index([adminUserId])
+  @@map("grounds")
+  @@schema("grounds")
+}

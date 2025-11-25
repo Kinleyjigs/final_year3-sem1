@@ -1,0 +1,5 @@
+{
+  "/(auth)/admin/grounds/new/page": "app/(auth)/admin/grounds/new/page.js",
+  "/api/admin/grounds/route": "app/api/admin/grounds/route.js",
+  "/api/auth/session/route": "app/api/auth/session/route.js"
+}

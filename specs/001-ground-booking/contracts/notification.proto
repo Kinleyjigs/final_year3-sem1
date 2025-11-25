@@ -1,0 +1,136 @@
+syntax = "proto3";
+
+package notification;
+
+// Notification Service - booking confirmation, cancellation, reminders, email templates
+
+service NotificationService {
+  // Send booking confirmation email
+  rpc SendBookingConfirmation(SendBookingConfirmationRequest) returns (SendNotificationResponse);
+  
+  // Send booking approval email
+  rpc SendBookingApproval(SendBookingApprovalRequest) returns (SendNotificationResponse);
+  
+  // Send booking rejection email
+  rpc SendBookingRejection(SendBookingRejectionRequest) returns (SendNotificationResponse);
+  
+  // Send booking cancellation email
+  rpc SendBookingCancellation(SendBookingCancellationRequest) returns (SendNotificationResponse);
+  
+  // Send maintenance-related booking cancellation email
+  rpc SendMaintenanceCancellation(SendMaintenanceCancellationRequest) returns (SendNotificationResponse);
+  
+  // Get notification history for user
+  rpc GetUserNotifications(GetUserNotificationsRequest) returns (GetUserNotificationsResponse);
+  
+  // Retry failed notifications
+  rpc RetryFailedNotifications(RetryFailedNotificationsRequest) returns (RetryFailedNotificationsResponse);
+}
+
+message SendBookingConfirmationRequest {
+  string booking_id = 1;
+  string user_id = 2;
+  string user_email = 3;
+  string user_name = 4;
+  BookingDetails booking_details = 5;
+}
+
+message SendBookingApprovalRequest {
+  string booking_id = 1;
+  string user_id = 2;
+  string user_email = 3;
+  string user_name = 4;
+  BookingDetails booking_details = 5;
+}
+
+message SendBookingRejectionRequest {
+  string booking_id = 1;
+  string user_id = 2;
+  string user_email = 3;
+  string user_name = 4;
+  BookingDetails booking_details = 5;
+  string rejection_reason = 6;
+}
+
+message SendBookingCancellationRequest {
+  string booking_id = 1;
+  string user_id = 2;
+  string user_email = 3;
+  string user_name = 4;
+  BookingDetails booking_details = 5;
+  string cancellation_reason = 6;
+  bool canceled_by_admin = 7;
+}
+
+message SendMaintenanceCancellationRequest {
+  string booking_id = 1;
+  string user_id = 2;
+  string user_email = 3;
+  string user_name = 4;
+  BookingDetails booking_details = 5;
+  string maintenance_description = 6;
+}
+
+message SendNotificationResponse {
+  bool success = 1;
+  string notification_id = 2;
+  string message = 3;
+}
+
+message GetUserNotificationsRequest {
+  string user_id = 1;
+  int32 page = 2;
+  int32 limit = 3;
+}
+
+message GetUserNotificationsResponse {
+  repeated Notification notifications = 1;
+  int32 total = 2;
+}
+
+message RetryFailedNotificationsRequest {
+  int32 max_retries = 1;
+}
+
+message RetryFailedNotificationsResponse {
+  int32 retried_count = 1;
+  int32 success_count = 2;
+  int32 failed_count = 3;
+}
+
+message BookingDetails {
+  string ground_name = 1;
+  string ground_location = 2;
+  string booking_date = 3;
+  string start_time = 4;
+  string end_time = 5;
+  string confirmation_code = 6;
+  string status = 7;
+}
+
+message Notification {
+  string id = 1;
+  string user_id = 2;
+  string booking_id = 3;
+  NotificationType type = 4;
+  string subject = 5;
+  string message = 6;
+  DeliveryStatus delivery_status = 7;
+  string sent_at = 8;
+  string created_at = 9;
+}
+
+enum NotificationType {
+  CONFIRMATION = 0;
+  APPROVAL = 1;
+  REJECTION = 2;
+  CANCELLATION = 3;
+  REMINDER = 4;
+  MAINTENANCE_CANCELLATION = 5;
+}
+
+enum DeliveryStatus {
+  PENDING = 0;
+  SENT = 1;
+  FAILED = 2;
+}

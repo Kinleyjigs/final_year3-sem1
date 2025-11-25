@@ -1,0 +1,3 @@
+{
+  "/(public)/grounds/[id]/page": "app/(public)/grounds/[id]/page.js"
+}

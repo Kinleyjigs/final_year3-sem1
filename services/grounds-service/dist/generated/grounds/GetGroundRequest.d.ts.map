@@ -1,0 +1,1 @@
+{"version":3,"file":"GetGroundRequest.d.ts","sourceRoot":"","sources":["../../../src/generated/grounds/GetGroundRequest.ts"],"names":[],"mappings":"AAGA,MAAM,WAAW,gBAAgB;IAC/B,UAAU,CAAC,EAAE,CAAC,MAAM,CAAC,CAAC;CACvB;AAED,MAAM,WAAW,wBAAwB;IACvC,UAAU,EAAE,CAAC,MAAM,CAAC,CAAC;CACtB"}

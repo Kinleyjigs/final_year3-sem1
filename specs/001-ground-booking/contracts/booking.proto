@@ -1,0 +1,193 @@
+syntax = "proto3";
+
+package booking;
+
+// Booking Service - create bookings, retrieve user bookings, cancel bookings, check conflicts
+
+service BookingService {
+  // Create a new booking
+  rpc CreateBooking(CreateBookingRequest) returns (CreateBookingResponse);
+  
+  // Get booking by ID
+  rpc GetBooking(GetBookingRequest) returns (Booking);
+  
+  // Get user's bookings
+  rpc GetUserBookings(GetUserBookingsRequest) returns (GetUserBookingsResponse);
+  
+  // Get bookings for a ground (admin view)
+  rpc GetGroundBookings(GetGroundBookingsRequest) returns (GetGroundBookingsResponse);
+  
+  // Get all bookings for college's grounds (admin view)
+  rpc GetCollegeBookings(GetCollegeBookingsRequest) returns (GetCollegeBookingsResponse);
+  
+  // Cancel booking (user or admin)
+  rpc CancelBooking(CancelBookingRequest) returns (Booking);
+  
+  // Approve booking (admin only)
+  rpc ApproveBooking(ApproveBookingRequest) returns (Booking);
+  
+  // Reject booking (admin only)
+  rpc RejectBooking(RejectBookingRequest) returns (Booking);
+  
+  // Check if time slot has conflicts
+  rpc CheckConflict(CheckConflictRequest) returns (CheckConflictResponse);
+  
+  // Get availability for ground and date range
+  rpc GetAvailability(GetAvailabilityRequest) returns (GetAvailabilityResponse);
+}
+
+message CreateBookingRequest {
+  string user_id = 1;
+  string ground_id = 2;
+  string booking_date = 3; // YYYY-MM-DD
+  string start_time = 4;   // HH:MM
+  string end_time = 5;     // HH:MM
+}
+
+message CreateBookingResponse {
+  Booking booking = 1;
+  ConflictInfo conflict = 2; // Populated if conflict detected
+}
+
+message GetBookingRequest {
+  string booking_id = 1;
+}
+
+message GetUserBookingsRequest {
+  string user_id = 1;
+  optional BookingStatus status = 2;
+  int32 page = 3;
+  int32 limit = 4;
+}
+
+message GetUserBookingsResponse {
+  repeated Booking bookings = 1;
+  int32 total = 2;
+  int32 page = 3;
+  int32 total_pages = 4;
+}
+
+message GetGroundBookingsRequest {
+  string ground_id = 1;
+  optional BookingStatus status = 2;
+}
+
+message GetGroundBookingsResponse {
+  repeated BookingWithUser bookings = 1;
+}
+
+message GetCollegeBookingsRequest {
+  string college = 1;
+  optional BookingStatus status = 2;
+  optional string ground_id = 3;
+}
+
+message GetCollegeBookingsResponse {
+  repeated BookingWithUser bookings = 1;
+}
+
+message CancelBookingRequest {
+  string booking_id = 1;
+  string user_id = 2;
+  optional string reason = 3;
+}
+
+message ApproveBookingRequest {
+  string booking_id = 1;
+  string admin_user_id = 2;
+}
+
+message RejectBookingRequest {
+  string booking_id = 1;
+  string admin_user_id = 2;
+  optional string reason = 3;
+}
+
+message CheckConflictRequest {
+  string ground_id = 1;
+  string booking_date = 2;
+  string start_time = 3;
+  string end_time = 4;
+  optional string exclude_booking_id = 5; // For update operations
+}
+
+message CheckConflictResponse {
+  bool has_conflict = 1;
+  ConflictInfo conflict = 2;
+}
+
+message GetAvailabilityRequest {
+  string ground_id = 1;
+  string start_date = 2; // YYYY-MM-DD
+  string end_date = 3;   // YYYY-MM-DD
+}
+
+message GetAvailabilityResponse {
+  repeated DayAvailability availability = 1;
+}
+
+message Booking {
+  string id = 1;
+  string user_id = 2;
+  string ground_id = 3;
+  string ground_name = 4; // Denormalized for display
+  string booking_date = 5;
+  string start_time = 6;
+  string end_time = 7;
+  BookingStatus status = 8;
+  string confirmation_code = 9;
+  string cancellation_reason = 10;
+  string created_at = 11;
+  string updated_at = 12;
+}
+
+message BookingWithUser {
+  Booking booking = 1;
+  UserInfo user = 2;
+}
+
+message UserInfo {
+  string id = 1;
+  string full_name = 2;
+  string email = 3;
+  string college = 4;
+}
+
+message ConflictInfo {
+  ConflictType type = 1;
+  string message = 2;
+  optional string conflicting_booking_id = 3;
+}
+
+enum ConflictType {
+  NONE = 0;
+  BOOKING_CONFLICT = 1;
+  MAINTENANCE_CONFLICT = 2;
+  INVALID_TIME_RANGE = 3;
+  PAST_DATE = 4;
+}
+
+message DayAvailability {
+  string date = 1; // YYYY-MM-DD
+  repeated TimeSlot slots = 2;
+}
+
+message TimeSlot {
+  string start_time = 1;
+  string end_time = 2;
+  SlotStatus status = 3;
+  optional string booking_id = 4;
+}
+
+enum SlotStatus {
+  AVAILABLE = 0;
+  BOOKED = 1;
+  MAINTENANCE = 2;
+}
+
+enum BookingStatus {
+  PENDING = 0;
+  APPROVED = 1;
+  REJECTED = 2;
+  CANCELED = 3;
+}

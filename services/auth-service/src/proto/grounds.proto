@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package grounds;
+
+// Grounds Service - manage grounds, photos, rules, metadata
+
+service GroundsService {
+  // Create a new ground (admin only)
+  rpc CreateGround(CreateGroundRequest) returns (Ground);
+  
+  // Update ground details (admin only)
+  rpc UpdateGround(UpdateGroundRequest) returns (Ground);
+  
+  // Get ground by ID
+  rpc GetGround(GetGroundRequest) returns (Ground);
+  
+  // Search grounds with filters
+  rpc SearchGrounds(SearchGroundsRequest) returns (SearchGroundsResponse);
+  
+  // Get grounds for a specific college (admin view)
+  rpc GetGroundsByCollege(GetGroundsByCollegeRequest) returns (GetGroundsByCollegeResponse);
+  
+  // Check if a given time is within peak hours for a ground
+  rpc IsPeakTime(IsPeakTimeRequest) returns (IsPeakTimeResponse);
+  
+  // Deactivate ground (soft delete)
+  rpc DeactivateGround(DeactivateGroundRequest) returns (Ground);
+}
+
+message CreateGroundRequest {
+  string name = 1;
+  string college = 2;
+  string location = 3;
+  string description = 4;
+  int32 capacity = 5;
+  repeated string amenities = 6;
+  map<string, PeakHourSlots> peak_hours = 7; // key: day of week (monday, tuesday, etc.)
+  repeated string photos = 8;
+  string admin_user_id = 9;
+  string timezone = 10;
+}
+
+message UpdateGroundRequest {
+  string ground_id = 1;
+  optional string name = 2;
+  optional string location = 3;
+  optional string description = 4;
+  optional int32 capacity = 5;
+  repeated string amenities = 6;
+  map<string, PeakHourSlots> peak_hours = 7;
+  repeated string photos = 8;
+  optional bool is_active = 9;
+}
+
+message GetGroundRequest {
+  string ground_id = 1;
+}
+
+message SearchGroundsRequest {
+  optional string college = 1;
+  optional string start_date = 2; // YYYY-MM-DD
+  optional string end_date = 3;   // YYYY-MM-DD
+  int32 page = 4;
+  int32 limit = 5;
+}
+
+message SearchGroundsResponse {
+  repeated Ground grounds = 1;
+  int32 total = 2;
+  int32 page = 3;
+  int32 total_pages = 4;
+}
+
+message GetGroundsByCollegeRequest {
+  string college = 1;
+  string admin_user_id = 2;
+}
+
+message GetGroundsByCollegeResponse {
+  repeated Ground grounds = 1;
+}
+
+message IsPeakTimeRequest {
+  string ground_id = 1;
+  string date_time = 2; // ISO 8601 format
+}
+
+message IsPeakTimeResponse {
+  bool is_peak = 1;
+}
+
+message DeactivateGroundRequest {
+  string ground_id = 1;
+  string admin_user_id = 2;
+}
+
+message Ground {
+  string id = 1;
+  string name = 2;
+  string college = 3;
+  string location = 4;
+  string description = 5;
+  int32 capacity = 6;
+  repeated string amenities = 7;
+  map<string, PeakHourSlots> peak_hours = 8;
+  repeated string photos = 9;
+  bool is_active = 10;
+  string timezone = 11;
+  string admin_user_id = 12;
+  string created_at = 13;
+  string updated_at = 14;
+}
+
+message PeakHourSlots {
+  repeated string time_ranges = 1; // e.g., ["18:00-20:00", "21:00-23:00"]
+}

@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 112, "column": 0}, "map": {"version":3,"sources":["file:///Users/yontenkinleytenzin/Desktop/final-3-year-sem1/one-stop-book/frontend/app/api/auth/signup/route.ts"],"sourcesContent":["import { NextResponse } from 'next/server';\nimport { getSignUpUrl } from '@workos-inc/authkit-nextjs';\n\nexport async function GET() {\n  try {\n    const signUpUrl = await getSignUpUrl();\n    return NextResponse.json({ url: signUpUrl });\n  } catch (error) {\n    console.error('Error generating sign-up URL:', error);\n    return NextResponse.json({ error: 'Failed to generate sign-up URL' }, { status: 500 });\n  }\n}\n"],"names":[],"mappings":";;;;AAAA;AACA;;;AAEO,eAAe;IACpB,IAAI;QACF,MAAM,YAAY,MAAM,IAAA,6LAAY;QACpC,OAAO,gJAAY,CAAC,IAAI,CAAC;YAAE,KAAK;QAAU;IAC5C,EAAE,OAAO,OAAO;QACd,QAAQ,KAAK,CAAC,iCAAiC;QAC/C,OAAO,gJAAY,CAAC,IAAI,CAAC;YAAE,OAAO;QAAiC,GAAG;YAAE,QAAQ;QAAI;IACtF;AACF"}}]
+}

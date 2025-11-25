@@ -1,0 +1,12 @@
+{
+  "/(auth)/dashboard/page": "/dashboard",
+  "/(auth)/profile/page": "/profile",
+  "/(public)/grounds/[id]/page": "/grounds/[id]",
+  "/(public)/login/page": "/login",
+  "/(public)/page": "/",
+  "/(public)/register/page": "/register",
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/"
+}

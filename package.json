@@ -2,25 +2,39 @@
   "name": "one-stop-book",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "frontend",
+    "services/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
-  "dependencies": {
-    "next": "16.0.3",
-    "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "dev": "npm run dev --workspace=frontend",
+    "dev:all": "concurrently \"npm run dev:gateway\" \"npm run dev:auth\" \"npm run dev:grounds\" \"npm run dev:booking\" \"npm run dev:maintenance\" \"npm run dev:notification\" \"npm run dev:frontend\"",
+    "dev:gateway": "npm run dev --workspace=services/api-gateway",
+    "dev:auth": "npm run dev --workspace=services/auth-service",
+    "dev:grounds": "npm run dev --workspace=services/grounds-service",
+    "dev:booking": "npm run dev --workspace=services/booking-service",
+    "dev:maintenance": "npm run dev --workspace=services/maintenance-service",
+    "dev:notification": "npm run dev --workspace=services/notification-service",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "db:migrate": "sh infrastructure/scripts/migrate-all.sh",
+    "db:seed": "tsx infrastructure/scripts/seed.ts",
+    "prepare": "husky"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "concurrently": "^9.1.0",
     "eslint": "^9",
-    "eslint-config-next": "16.0.3",
-    "tailwindcss": "^4",
+    "husky": "^9.0.0",
+    "prettier": "^3.4.0",
+    "tsx": "^4.20.6",
     "typescript": "^5"
   }
 }

@@ -1,0 +1,1 @@
+{"version":3,"file":"ApproveBookingRequest.d.ts","sourceRoot":"","sources":["../../../src/generated/booking/ApproveBookingRequest.ts"],"names":[],"mappings":"AAGA,MAAM,WAAW,qBAAqB;IACpC,WAAW,CAAC,EAAE,CAAC,MAAM,CAAC,CAAC;IACvB,aAAa,CAAC,EAAE,CAAC,MAAM,CAAC,CAAC;CAC1B;AAED,MAAM,WAAW,6BAA6B;IAC5C,WAAW,EAAE,CAAC,MAAM,CAAC,CAAC;IACtB,aAAa,EAAE,CAAC,MAAM,CAAC,CAAC;CACzB"}

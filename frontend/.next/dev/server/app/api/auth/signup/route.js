@@ -1,0 +1,10 @@
+var R=require("../../../../chunks/[turbopack]_runtime.js")("server/app/api/auth/signup/route.js")
+R.c("server/chunks/node_modules_next_ee4cfb26._.js")
+R.c("server/chunks/node_modules_862f3e5e._.js")
+R.c("server/chunks/node_modules_@workos-inc_node_lib_708253c8._.js")
+R.c("server/chunks/node_modules_@peculiar_webcrypto_build_webcrypto_es_adb1f8d3.js")
+R.c("server/chunks/node_modules_3d932a5b._.js")
+R.c("server/chunks/[root-of-the-server]__027afb94._.js")
+R.c("server/chunks/frontend__next-internal_server_app_api_auth_signup_route_actions_ca0f2749.js")
+R.m("[project]/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/frontend/app/api/auth/signup/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)")
+module.exports=R.m("[project]/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/frontend/app/api/auth/signup/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports

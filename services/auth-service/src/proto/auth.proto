@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+package auth;
+
+// Auth Service - JWT issuance, role validation, user profiles
+
+service AuthService {
+  // User registration
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  
+  // User login (returns JWT)
+  rpc Login(LoginRequest) returns (LoginResponse);
+  
+  // Verify JWT token validity
+  rpc VerifyToken(VerifyTokenRequest) returns (VerifyTokenResponse);
+  
+  // Get user profile by ID
+  rpc GetUser(GetUserRequest) returns (User);
+  
+  // Update user profile
+  rpc UpdateUser(UpdateUserRequest) returns (User);
+  
+  // Validate user has required role for action
+  rpc ValidateRole(ValidateRoleRequest) returns (ValidateRoleResponse);
+}
+
+message RegisterRequest {
+  string email = 1;
+  string password = 2;
+  string full_name = 3;
+  string college = 4;
+}
+
+message RegisterResponse {
+  User user = 1;
+  string token = 2;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  User user = 1;
+  string token = 2;
+}
+
+message VerifyTokenRequest {
+  string token = 1;
+}
+
+message VerifyTokenResponse {
+  bool valid = 1;
+  string user_id = 2;
+  string email = 3;
+  Role role = 4;
+  string college = 5;
+}
+
+message GetUserRequest {
+  string user_id = 1;
+}
+
+message UpdateUserRequest {
+  string user_id = 1;
+  optional string full_name = 2;
+  optional string college = 3;
+}
+
+message ValidateRoleRequest {
+  string user_id = 1;
+  Role required_role = 2;
+}
+
+message ValidateRoleResponse {
+  bool authorized = 1;
+  string message = 2;
+}
+
+message User {
+  string id = 1;
+  string email = 2;
+  string full_name = 3;
+  string college = 4;
+  Role role = 5;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+enum Role {
+  VISITOR = 0;
+  USER = 1;
+  ADMIN = 2;
+}

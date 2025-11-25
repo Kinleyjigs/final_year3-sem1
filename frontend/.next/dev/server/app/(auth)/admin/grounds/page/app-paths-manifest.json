@@ -1,0 +1,3 @@
+{
+  "/(auth)/admin/grounds/page": "app/(auth)/admin/grounds/page.js"
+}

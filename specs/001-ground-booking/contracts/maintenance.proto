@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+package maintenance;
+
+// Maintenance Service - schedule maintenance windows, detect conflict bookings, trigger cancellations
+
+service MaintenanceService {
+  // Create a maintenance window
+  rpc CreateMaintenance(CreateMaintenanceRequest) returns (CreateMaintenanceResponse);
+  
+  // Get maintenance window by ID
+  rpc GetMaintenance(GetMaintenanceRequest) returns (Maintenance);
+  
+  // Get maintenance windows for a ground
+  rpc GetGroundMaintenance(GetGroundMaintenanceRequest) returns (GetGroundMaintenanceResponse);
+  
+  // Get maintenance windows for college's grounds (admin view)
+  rpc GetCollegeMaintenance(GetCollegeMaintenanceRequest) returns (GetCollegeMaintenanceResponse);
+  
+  // Cancel/delete a maintenance window
+  rpc CancelMaintenance(CancelMaintenanceRequest) returns (CancelMaintenanceResponse);
+  
+  // Check if a time range conflicts with maintenance
+  rpc CheckConflict(CheckConflictRequest) returns (CheckConflictResponse);
+}
+
+message CreateMaintenanceRequest {
+  string ground_id = 1;
+  string start_date_time = 2; // ISO 8601 format
+  string end_date_time = 3;   // ISO 8601 format
+  string description = 4;
+  string admin_user_id = 5;
+}
+
+message CreateMaintenanceResponse {
+  Maintenance maintenance = 1;
+  repeated string canceled_booking_ids = 2; // Bookings canceled due to maintenance
+}
+
+message GetMaintenanceRequest {
+  string maintenance_id = 1;
+}
+
+message GetGroundMaintenanceRequest {
+  string ground_id = 1;
+  optional string start_date = 2; // Filter by date range
+  optional string end_date = 3;
+}
+
+message GetGroundMaintenanceResponse {
+  repeated Maintenance maintenance_windows = 1;
+}
+
+message GetCollegeMaintenanceRequest {
+  string college = 1;
+  optional string ground_id = 2;
+}
+
+message GetCollegeMaintenanceResponse {
+  repeated Maintenance maintenance_windows = 1;
+}
+
+message CancelMaintenanceRequest {
+  string maintenance_id = 1;
+  string admin_user_id = 2;
+}
+
+message CancelMaintenanceResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message CheckConflictRequest {
+  string ground_id = 1;
+  string start_date_time = 2;
+  string end_date_time = 3;
+}
+
+message CheckConflictResponse {
+  bool has_conflict = 1;
+  string message = 2;
+  repeated Maintenance conflicting_windows = 3;
+}
+
+message Maintenance {
+  string id = 1;
+  string ground_id = 2;
+  string ground_name = 3; // Denormalized for display
+  string start_date_time = 4;
+  string end_date_time = 5;
+  string description = 6;
+  string created_by_user_id = 7;
+  string created_at = 8;
+  string updated_at = 9;
+}

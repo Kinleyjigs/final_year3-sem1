@@ -1,0 +1,44 @@
+# Development Docker Compose - Infrastructure Only
+# Run services locally with: npm run dev
+# This file only provides PostgreSQL and Redis
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: osb-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: osb_user
+      POSTGRES_PASSWORD: osb_password
+      POSTGRES_DB: one_stop_book
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U osb_user -d one_stop_book"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for caching and rate limiting
+  redis:
+    image: redis:7-alpine
+    container_name: osb-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  postgres_data:
+  redis_data:

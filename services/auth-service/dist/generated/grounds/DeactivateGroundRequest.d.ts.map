@@ -1,0 +1,1 @@
+{"version":3,"file":"DeactivateGroundRequest.d.ts","sourceRoot":"","sources":["../../../src/generated/grounds/DeactivateGroundRequest.ts"],"names":[],"mappings":"AAGA,MAAM,WAAW,uBAAuB;IACtC,UAAU,CAAC,EAAE,CAAC,MAAM,CAAC,CAAC;IACtB,aAAa,CAAC,EAAE,CAAC,MAAM,CAAC,CAAC;CAC1B;AAED,MAAM,WAAW,+BAA+B;IAC9C,UAAU,EAAE,CAAC,MAAM,CAAC,CAAC;IACrB,aAAa,EAAE,CAAC,MAAM,CAAC,CAAC;CACzB"}

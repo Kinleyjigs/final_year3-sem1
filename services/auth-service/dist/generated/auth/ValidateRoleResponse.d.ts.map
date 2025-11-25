@@ -1,0 +1,1 @@
+{"version":3,"file":"ValidateRoleResponse.d.ts","sourceRoot":"","sources":["../../../src/generated/auth/ValidateRoleResponse.ts"],"names":[],"mappings":"AAGA,MAAM,WAAW,oBAAoB;IACnC,YAAY,CAAC,EAAE,CAAC,OAAO,CAAC,CAAC;IACzB,SAAS,CAAC,EAAE,CAAC,MAAM,CAAC,CAAC;CACtB;AAED,MAAM,WAAW,4BAA4B;IAC3C,YAAY,EAAE,CAAC,OAAO,CAAC,CAAC;IACxB,SAAS,EAAE,CAAC,MAAM,CAAC,CAAC;CACrB"}

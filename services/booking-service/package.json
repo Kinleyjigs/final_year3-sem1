@@ -1,0 +1,27 @@
+{
+  "name": "@one-stop-book/booking-service",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "test": "jest",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "proto:generate": "mkdir -p src/generated && proto-loader-gen-types --longs=String --enums=String --defaults --oneofs --grpcLib=@grpc/grpc-js --outDir=src/generated src/proto/*.proto"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.12.4",
+    "@grpc/proto-loader": "^0.7.13",
+    "@prisma/client": "^6.1.0",
+    "@one-stop-book/common": "*",
+    "@one-stop-book/grpc-clients": "*"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "prisma": "^6.1.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5"
+  }
+}

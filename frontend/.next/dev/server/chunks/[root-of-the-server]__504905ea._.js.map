@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 112, "column": 0}, "map": {"version":3,"sources":["file:///Users/yontenkinleytenzin/Desktop/final-3-year-sem1/one-stop-book/frontend/proxy.ts"],"sourcesContent":["import { authkitMiddleware } from '@workos-inc/authkit-nextjs';\n\nexport default authkitMiddleware({\n  redirectUri: process.env.WORKOS_REDIRECT_URI || 'http://localhost:3001/api/auth/callback',\n  // Paths that don't require authentication\n  publicPaths: [\n    '/',\n    '/login',\n    '/register',\n    '/api/auth/callback',\n    '/grounds',\n    '/grounds/:id',\n  ],\n});\n\n// Optionally, don't invoke Middleware on some paths\nexport const config = {\n  matcher: [\n    /*\n     * Match all request paths except for the ones starting with:\n     * - _next/static (static files)\n     * - _next/image (image optimization files)\n     * - favicon.ico (favicon file)\n     * - public folder\n     */\n    '/((?!_next/static|_next/image|favicon.ico|.*\\\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',\n  ],\n};\n"],"names":[],"mappings":";;;;;;AAAA;;uCAEe,IAAA,sMAAiB,EAAC;IAC/B,aAAa,+EAAmC;IAChD,0CAA0C;IAC1C,aAAa;QACX;QACA;QACA;QACA;QACA;QACA;KACD;AACH;AAGO,MAAM,SAAS;IACpB,SAAS;QACP;;;;;;KAMC,GACD;KACD;AACH"}}]
+}
